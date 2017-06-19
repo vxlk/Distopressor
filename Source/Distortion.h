@@ -20,13 +20,13 @@ public:
         float mix;
     } controls;
     
-    Distortion();
+	Distortion();
     ~Distortion();
     float processSample(float sample);
     
 private:
     // Intermediate values
-    float input, output = 0.f;
+   // float input, output;
     float softClipThreshold = 2.f / 3.f;
     
     // Nonlinearities
@@ -43,6 +43,10 @@ private:
     
     float gloubiBoulga(float sample);
     float gloubiApprox(float sample);
+
+public:
+	float input;
+	float output;
 };
 
 #endif  // DISTORTION_H_INCLUDED

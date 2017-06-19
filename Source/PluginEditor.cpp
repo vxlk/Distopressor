@@ -31,6 +31,68 @@ PluginAudioProcessorEditor::PluginAudioProcessorEditor (PluginAudioProcessor& p)
     : AudioProcessorEditor (&p), processor (p)
 {
     //[Constructor_pre] You can add your own custom stuff here..
+  /*  addAndMakeVisible (distSlider = new Slider ("dist Slider"));
+    thresholdSlider->setRange (-20, 0, 0.01);
+    thresholdSlider->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
+    thresholdSlider->setTextBoxStyle (Slider::TextBoxBelow, false, 80, 20);
+    thresholdSlider->setColour (Slider::backgroundColourId, Colours::white);
+    thresholdSlider->setColour (Slider::thumbColourId, Colours::white);
+    thresholdSlider->setColour (Slider::trackColourId, Colours::white);
+    thresholdSlider->setColour (Slider::rotarySliderFillColourId, Colours::white);
+    thresholdSlider->setColour (Slider::rotarySliderOutlineColourId, Colours::chartreuse);
+    thresholdSlider->addListener (this);
+
+    addAndMakeVisible (driveSlider = new Slider ("drive Slider"));
+    thresholdSlider->setRange (-20, 0, 0.01);
+    thresholdSlider->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
+    thresholdSlider->setTextBoxStyle (Slider::TextBoxBelow, false, 80, 20);
+    thresholdSlider->setColour (Slider::backgroundColourId, Colours::white);
+    thresholdSlider->setColour (Slider::thumbColourId, Colours::white);
+    thresholdSlider->setColour (Slider::trackColourId, Colours::white);
+    thresholdSlider->setColour (Slider::rotarySliderFillColourId, Colours::white);
+    thresholdSlider->setColour (Slider::rotarySliderOutlineColourId, Colours::chartreuse);
+    thresholdSlider->addListener (this);
+
+    addAndMakeVisible (modeSlider = new Slider ("Threshold Slider"));
+    thresholdSlider->setRange (-20, 0, 0.01);
+    thresholdSlider->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
+    thresholdSlider->setTextBoxStyle (Slider::TextBoxBelow, false, 80, 20);
+    thresholdSlider->setColour (Slider::backgroundColourId, Colours::white);
+    thresholdSlider->setColour (Slider::thumbColourId, Colours::white);
+    thresholdSlider->setColour (Slider::trackColourId, Colours::white);
+    thresholdSlider->setColour (Slider::rotarySliderFillColourId, Colours::white);
+    thresholdSlider->setColour (Slider::rotarySliderOutlineColourId, Colours::chartreuse);
+    thresholdSlider->addListener (this);
+	*/
+    //labels
+    /*addAndMakeVisible (modeLabel = new Label ("Mode Label",
+                                               TRANS("Mode")));
+    ratioLabel->setFont (Font (16.00f, Font::plain));
+    ratioLabel->setJustificationType (Justification::centred);
+    ratioLabel->setEditable (false, false, false);
+    ratioLabel->setColour (Label::textColourId, Colours::white);
+    ratioLabel->setColour (TextEditor::textColourId, Colours::black);
+    ratioLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (driveLabel = new Label ("drive Label",
+                                               TRANS("Drive")));
+    ratioLabel->setFont (Font (16.00f, Font::plain));
+    ratioLabel->setJustificationType (Justification::centred);
+    ratioLabel->setEditable (false, false, false);
+    ratioLabel->setColour (Label::textColourId, Colours::white);
+    ratioLabel->setColour (TextEditor::textColourId, Colours::black);
+    ratioLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (distLabel = new Label ("dist Label",
+                                               TRANS("Disto")));
+    ratioLabel->setFont (Font (16.00f, Font::plain));
+    ratioLabel->setJustificationType (Justification::centred);
+    ratioLabel->setEditable (false, false, false);
+    ratioLabel->setColour (Label::textColourId, Colours::white);
+    ratioLabel->setColour (TextEditor::textColourId, Colours::black);
+    ratioLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+	*/
+
     //[/Constructor_pre]
 
     addAndMakeVisible (thresholdSlider = new Slider ("Threshold Slider"));
@@ -110,36 +172,90 @@ PluginAudioProcessorEditor::PluginAudioProcessorEditor (PluginAudioProcessor& p)
     releaseLabel->setColour (TextEditor::textColourId, Colours::black);
     releaseLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    addAndMakeVisible (slider = new Slider ("new slider"));
-    slider->setRange (0, 10, 0);
-    slider->setSliderStyle (Slider::LinearHorizontal);
-    slider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
-    slider->addListener (this);
+    addAndMakeVisible (mixSlider = new Slider ("mixSlider"));
+    mixSlider->setRange (0, 10, 0);
+    mixSlider->setSliderStyle (Slider::LinearHorizontal);
+    mixSlider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
+    mixSlider->addListener (this);
 
-    addAndMakeVisible (textEditor = new TextEditor ("new text editor"));
-    textEditor->setMultiLine (false);
-    textEditor->setReturnKeyStartsNewLine (false);
-    textEditor->setReadOnly (false);
-    textEditor->setScrollbarsShown (true);
-    textEditor->setCaretVisible (true);
-    textEditor->setPopupMenuEnabled (true);
-    textEditor->setText (TRANS("dry/wet\n"));
+    addAndMakeVisible (mixLabel = new TextEditor ("mixLabel"));
+    mixLabel->setMultiLine (false);
+    mixLabel->setReturnKeyStartsNewLine (false);
+    mixLabel->setReadOnly (false);
+    mixLabel->setScrollbarsShown (true);
+    mixLabel->setCaretVisible (true);
+    mixLabel->setPopupMenuEnabled (true);
+    mixLabel->setText (TRANS("dry/wet\n"));
+
+    addAndMakeVisible (distSlider = new Slider ("distSlider"));
+    distSlider->setRange (0, 10, 0);
+    distSlider->setSliderStyle (Slider::LinearHorizontal);
+    distSlider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
+    distSlider->addListener (this);
+
+    addAndMakeVisible (driveSlider = new Slider ("driveSlider"));
+    driveSlider->setRange (0, 10, 0);
+    driveSlider->setSliderStyle (Slider::LinearHorizontal);
+    driveSlider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
+    driveSlider->addListener (this);
+
+    addAndMakeVisible (modeSlider = new Slider ("modeSlider"));
+    modeSlider->setRange (0, 10, 0);
+    modeSlider->setSliderStyle (Slider::LinearHorizontal);
+    modeSlider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
+    modeSlider->addListener (this);
+
+    addAndMakeVisible (distLabel = new TextEditor ("distLabel"));
+    distLabel->setMultiLine (false);
+    distLabel->setReturnKeyStartsNewLine (false);
+    distLabel->setReadOnly (false);
+    distLabel->setScrollbarsShown (true);
+    distLabel->setCaretVisible (true);
+    distLabel->setPopupMenuEnabled (true);
+    distLabel->setText (TRANS("Distortion"));
+
+    addAndMakeVisible (driveLabel = new TextEditor ("driveLabel"));
+    driveLabel->setMultiLine (false);
+    driveLabel->setReturnKeyStartsNewLine (false);
+    driveLabel->setReadOnly (false);
+    driveLabel->setScrollbarsShown (true);
+    driveLabel->setCaretVisible (true);
+    driveLabel->setPopupMenuEnabled (true);
+    driveLabel->setText (TRANS("Drive\n"));
+
+    addAndMakeVisible (modeLabel = new TextEditor ("modeLabel"));
+    modeLabel->setMultiLine (false);
+    modeLabel->setReturnKeyStartsNewLine (false);
+    modeLabel->setReadOnly (false);
+    modeLabel->setScrollbarsShown (true);
+    modeLabel->setCaretVisible (true);
+    modeLabel->setPopupMenuEnabled (true);
+    modeLabel->setText (TRANS("Drive\n"));
 
 
     //[UserPreSize]
     // Add any other settings not offered by GUI editor here, else they'll be deleted
+	//these add double click functionality, double clicking resets position
     thresholdSlider ->setDoubleClickReturnValue(true, processor.DEFAULT_THRESHOLD);
     ratioSlider     ->setDoubleClickReturnValue(true, processor.DEFAULT_RATIO);
     attackSlider    ->setDoubleClickReturnValue(true, processor.DEFAULT_ATTACK * 1000.f);
     releaseSlider   ->setDoubleClickReturnValue(true, processor.DEFAULT_RELEASE * 1000.f);
+	distSlider		->setDoubleClickReturnValue(true, processor.DEFAULT_DISTTHRESHOLD);
+	driveSlider		->setDoubleClickReturnValue(true, processor.DEFAULT_DRIVE);
+	mixSlider		->setDoubleClickReturnValue(true, processor.DEFAULT_MIX);
 
     thresholdSlider ->setTextValueSuffix("dB");
     ratioSlider     ->setTextValueSuffix(":1");
     attackSlider    ->setTextValueSuffix("ms");
     releaseSlider   ->setTextValueSuffix("ms");
+	//subject to delete
+	distSlider		->setTextValueSuffix("...");
+	driveSlider		->setTextValueSuffix("...");
+	mixSlider		->setTextValueSuffix("...");
+
     //[/UserPreSize]
 
-    setSize (200, 264);
+    setSize (300, 400);
 
 
     //[Constructor] You can add your own custom stuff here..
@@ -150,6 +266,24 @@ PluginAudioProcessorEditor::PluginAudioProcessorEditor (PluginAudioProcessor& p)
 PluginAudioProcessorEditor::~PluginAudioProcessorEditor()
 {
     //[Destructor_pre]. You can add your own custom destruction code here..
+
+   thresholdSlider = nullptr;
+    ratioSlider = nullptr;
+    ratioLabel = nullptr;
+    thresholdLabel = nullptr;
+    attackSlider = nullptr;
+    attackLabel = nullptr;
+    releaseSlider = nullptr;
+    releaseLabel = nullptr;
+    //slider = nullptr;
+    //textEditor = nullptr;
+	modeSlider = nullptr;
+	distSlider = nullptr;
+	driveSlider = nullptr;
+	modeLabel = nullptr;
+	distLabel = nullptr;
+	driveLabel = nullptr;
+
     //[/Destructor_pre]
 
     thresholdSlider = nullptr;
@@ -160,8 +294,14 @@ PluginAudioProcessorEditor::~PluginAudioProcessorEditor()
     attackLabel = nullptr;
     releaseSlider = nullptr;
     releaseLabel = nullptr;
-    slider = nullptr;
-    textEditor = nullptr;
+    mixSlider = nullptr;
+    mixLabel = nullptr;
+    distSlider = nullptr;
+    driveSlider = nullptr;
+    modeSlider = nullptr;
+    distLabel = nullptr;
+    driveLabel = nullptr;
+    modeLabel = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -184,6 +324,27 @@ void PluginAudioProcessorEditor::paint (Graphics& g)
 void PluginAudioProcessorEditor::resized()
 {
     //[UserPreResize] Add your own custom resize code here..
+
+
+   /* thresholdSlider->setBounds (8, 40, 80, 88);
+    ratioSlider->setBounds (8, 168, 80, 88);
+    ratioLabel->setBounds (8, 136, 80, 24);
+    thresholdLabel->setBounds (8, 8, 80, 24);
+    attackSlider->setBounds (104, 40, 80, 88);
+    attackLabel->setBounds (104, 8, 80, 24);
+    releaseSlider->setBounds (104, 168, 80, 88);
+    releaseLabel->setBounds (104, 136, 80, 24);
+    slider->setBounds (16, 288, 150, 24);
+    textEditor->setBounds (176, 288, 150, 24);
+    mixSlider->setBounds (176, 288, 150, 24);
+    driveSlider->setBounds (176, 288, 150, 24);
+    modeButton->setBounds (176, 288, 150, 24);
+    distSlider->setBounds (176, 288, 150, 24);
+    distLabel->setBounds (60, 288, 150, 24);
+    mixLabel->setBounds (80, 288, 150, 24);
+    modeLabel->setBounds (65, 288, 150, 24);
+    driveLabel->setBounds (76, 288, 150, 24); */
+
     //[/UserPreResize]
 
     thresholdSlider->setBounds (8, 40, 80, 88);
@@ -194,8 +355,14 @@ void PluginAudioProcessorEditor::resized()
     attackLabel->setBounds (104, 8, 80, 24);
     releaseSlider->setBounds (104, 168, 80, 88);
     releaseLabel->setBounds (104, 136, 80, 24);
-    slider->setBounds (16, 288, 150, 24);
-    textEditor->setBounds (176, 288, 150, 24);
+    mixSlider->setBounds (16, 288, 150, 24);
+    mixLabel->setBounds (176, 288, 150, 24);
+    distSlider->setBounds (16, 328, 150, 24);
+    driveSlider->setBounds (16, 368, 150, 24);
+    modeSlider->setBounds (16, 408, 150, 24);
+    distLabel->setBounds (176, 328, 150, 24);
+    driveLabel->setBounds (176, 368, 150, 24);
+    modeLabel->setBounds (176, 408, 150, 24);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -235,13 +402,53 @@ void PluginAudioProcessorEditor::sliderValueChanged (Slider* sliderThatWasMoved)
         processor.setParameterNotifyingHost(processor.release, normalizedValue);
         //[/UserSliderCode_releaseSlider]
     }
-    else if (sliderThatWasMoved == slider)
+    else if (sliderThatWasMoved == mixSlider)
     {
-        //[UserSliderCode_slider] -- add your slider handling code here..
-        //[/UserSliderCode_slider]
+        //[UserSliderCode_mixSlider] -- add your slider handling code here..
+        normalizedValue = processor.userParams[processor.release].setWithUparam(sliderThatWasMoved->getValue() / 1000.f);
+        processor.setParameterNotifyingHost(processor.release, normalizedValue);
+        //[/UserSliderCode_mixSlider]
+    }
+    else if (sliderThatWasMoved == distSlider)
+    {
+        //[UserSliderCode_distSlider] -- add your slider handling code here..
+        //[/UserSliderCode_distSlider]
+    }
+    else if (sliderThatWasMoved == driveSlider)
+    {
+        //[UserSliderCode_driveSlider] -- add your slider handling code here..
+        //[/UserSliderCode_driveSlider]
+    }
+    else if (sliderThatWasMoved == modeSlider)
+    {
+        //[UserSliderCode_modeSlider] -- add your slider handling code here..
+        //[/UserSliderCode_modeSlider]
     }
 
     //[UsersliderValueChanged_Post]
+    else if (sliderThatWasMoved == driveSlider)
+    {
+        //[UserSliderCode_ratioSlider] -- add your slider handling code here..
+        normalizedValue = processor.userParams[processor.ratio].setWithUparam(sliderThatWasMoved->getValue());
+        processor.setParameterNotifyingHost(processor.ratio, normalizedValue);
+        //[/UserSliderCode_ratioSlider]
+    }
+	else if (sliderThatWasMoved == distSlider)
+	{
+		//[UserSliderCode_attackSlider] -- add your slider handling code here..
+		// Must convert to seconds before sending to processor
+		normalizedValue = processor.userParams[processor.attack].setWithUparam(sliderThatWasMoved->getValue() / 1000.f);
+		processor.setParameterNotifyingHost(processor.attack, normalizedValue);
+		//[/UserSliderCode_attackSlider]
+	}
+	else if (sliderThatWasMoved == mixSlider)
+	{
+		//[UserSliderCode_attackSlider] -- add your slider handling code here..
+		// Must convert to seconds before sending to processor
+		normalizedValue = processor.userParams[processor.attack].setWithUparam(sliderThatWasMoved->getValue() / 1000.f);
+		processor.setParameterNotifyingHost(processor.attack, normalizedValue);
+	}
+		//[/UserSliderCode_attackSlider]
     //[/UsersliderValueChanged_Post]
 }
 
@@ -257,6 +464,8 @@ void PluginAudioProcessorEditor::timerCallback() {
     // Must convert to milliseconds before updating GUI
     attackSlider    ->setValue(processor.userParams[processor.attack].getUparamVal() * 1000.f, dontSendNotification);
     releaseSlider   ->setValue(processor.userParams[processor.release].getUparamVal() * 1000.f, dontSendNotification);
+	distSlider		->setValue(processor.userParams[processor.distthreshold].getUparamVal() * 1000.f, dontSendNotification);
+	driveSlider		->setValue(processor.userParams[processor.drive].getUparamVal() * 1000.f, dontSendNotification);
 }
 //[/MiscUserCode]
 
@@ -274,7 +483,7 @@ BEGIN_JUCER_METADATA
                  componentName="" parentClasses="public AudioProcessorEditor, public Timer"
                  constructorParams="PluginAudioProcessor&amp; p" variableInitialisers="AudioProcessorEditor (&amp;p), processor (p)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="0" initialWidth="200" initialHeight="264">
+                 fixedSize="0" initialWidth="300" initialHeight="400">
   <BACKGROUND backgroundColour="ff010000"/>
   <SLIDER name="Threshold Slider" id="1e116366caad33a9" memberName="thresholdSlider"
           virtualName="" explicitFocusOrder="0" pos="8 40 80 88" bkgcol="ffffffff"
@@ -321,12 +530,40 @@ BEGIN_JUCER_METADATA
          edTextCol="ff000000" edBkgCol="0" labelText="Release" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="16" bold="0" italic="0" justification="36"/>
-  <SLIDER name="new slider" id="b62450b400d2b9ec" memberName="slider" virtualName=""
-          explicitFocusOrder="0" pos="16 288 150 24" min="0" max="10" int="0"
-          style="LinearHorizontal" textBoxPos="TextBoxLeft" textBoxEditable="1"
-          textBoxWidth="80" textBoxHeight="20" skewFactor="1" needsCallback="1"/>
-  <TEXTEDITOR name="new text editor" id="5cd3dde1f4408833" memberName="textEditor"
-              virtualName="" explicitFocusOrder="0" pos="176 288 150 24" initialText="dry/wet&#10;"
+  <SLIDER name="mixSlider" id="b62450b400d2b9ec" memberName="mixSlider"
+          virtualName="" explicitFocusOrder="0" pos="16 288 150 24" min="0"
+          max="10" int="0" style="LinearHorizontal" textBoxPos="TextBoxLeft"
+          textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"
+          needsCallback="1"/>
+  <TEXTEDITOR name="mixLabel" id="5cd3dde1f4408833" memberName="mixLabel" virtualName=""
+              explicitFocusOrder="0" pos="176 288 150 24" initialText="dry/wet&#10;"
+              multiline="0" retKeyStartsLine="0" readonly="0" scrollbars="1"
+              caret="1" popupmenu="1"/>
+  <SLIDER name="distSlider" id="91d2d5a2580ba92f" memberName="distSlider"
+          virtualName="" explicitFocusOrder="0" pos="16 328 150 24" min="0"
+          max="10" int="0" style="LinearHorizontal" textBoxPos="TextBoxLeft"
+          textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"
+          needsCallback="1"/>
+  <SLIDER name="driveSlider" id="aeea53e4473ce099" memberName="driveSlider"
+          virtualName="" explicitFocusOrder="0" pos="16 368 150 24" min="0"
+          max="10" int="0" style="LinearHorizontal" textBoxPos="TextBoxLeft"
+          textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"
+          needsCallback="1"/>
+  <SLIDER name="modeSlider" id="3a4b65fabf8a1e02" memberName="modeSlider"
+          virtualName="" explicitFocusOrder="0" pos="16 408 150 24" min="0"
+          max="10" int="0" style="LinearHorizontal" textBoxPos="TextBoxLeft"
+          textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"
+          needsCallback="1"/>
+  <TEXTEDITOR name="distLabel" id="108905b02273d32a" memberName="distLabel"
+              virtualName="" explicitFocusOrder="0" pos="176 328 150 24" initialText="Distortion"
+              multiline="0" retKeyStartsLine="0" readonly="0" scrollbars="1"
+              caret="1" popupmenu="1"/>
+  <TEXTEDITOR name="driveLabel" id="b61a180c103e03a8" memberName="driveLabel"
+              virtualName="" explicitFocusOrder="0" pos="176 368 150 24" initialText="Drive&#10;"
+              multiline="0" retKeyStartsLine="0" readonly="0" scrollbars="1"
+              caret="1" popupmenu="1"/>
+  <TEXTEDITOR name="modeLabel" id="3c9bd99d1b3917a9" memberName="modeLabel"
+              virtualName="" explicitFocusOrder="0" pos="176 408 150 24" initialText="Drive&#10;"
               multiline="0" retKeyStartsLine="0" readonly="0" scrollbars="1"
               caret="1" popupmenu="1"/>
 </JUCER_COMPONENT>

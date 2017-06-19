@@ -32,6 +32,11 @@ public:
     UParam(float min, float max, float sVal){setMinMax(min,max);
         setWithVstVal(sVal);}
 
+	void setLinearMinMax(int min, int max) {
+		minVal = min;
+		maxVal = max;
+	}
+
     // call this to set the min and max values of the userParameter
     void setMinMax(float min, float max){
         minVal = min;

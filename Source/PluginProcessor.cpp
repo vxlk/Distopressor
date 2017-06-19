@@ -15,6 +15,7 @@
 //==============================================================================
 PluginAudioProcessor::PluginAudioProcessor()
 {
+	processor = new Distortion();
     userParams[threshold].setMinMax(-20.f, 0.f);
     userParams[threshold].setWithUparam(DEFAULT_THRESHOLD);
     
@@ -29,7 +30,7 @@ PluginAudioProcessor::PluginAudioProcessor()
     userParams[release].setWithUparam(DEFAULT_RELEASE);
 
 	//mode takes an integer rather than float
-	userParams[mode].setMinMax(0, 1);
+	userParams[mode].setLinearMinMax(0, 8);
 	userParams[mode].setWithUparam(DEFAULT_MODE);
 
 	userParams[drive].setMinMax(0.f, 1.f);
@@ -39,7 +40,16 @@ PluginAudioProcessor::PluginAudioProcessor()
 	userParams[distthreshold].setWithUparam(DEFAULT_DISTTHRESHOLD);
 
 	userParams[mix].setMinMax(0.f, 1.f);
-	userParams[mix].setWithUparam(DEFAULT_MIX);
+	userParams[mix].setWithUparam(DEFAULT_MIX); //modify a special uparam that static casts to ints
+
+	/*addParameter(mode
+		= new PluginParameter(Identifier("mode"),
+			0.f, 0.f, 8.f, "Mode", String::empty, 0,
+			[this](float actualValue) {
+		processor->controls.mode
+			= static_cast<int>(floorf(actualValue));
+	}));
+	*/
 }
 
 PluginAudioProcessor::~PluginAudioProcessor()
@@ -295,14 +305,18 @@ void PluginAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& 
 
     // This is the place where you'd normally do the guts of your plugin's
     // audio processing...
+	
     float* leftChannelData  = buffer.getWritePointer (0);
     float* rightChannelData = buffer.getWritePointer (1);
-    
-    for (int i = 0; i < buffer.getNumSamples(); i++) {
-        // Peak detector
-        peakOutL = leftLevelDetector->tick(leftChannelData[i]);
-        peakOutR = rightLevelDetector->tick(rightChannelData[i]);
-        peakSum = (peakOutL + peakOutR) * 0.5f;
+	//std::vector<float*>channelData;
+	//float* channelData;
+
+	for (int i = 0; i < buffer.getNumSamples(); i++) {
+		// Peak detector
+		peakOutL = leftLevelDetector->tick(leftChannelData[i]);
+		peakOutR = rightLevelDetector->tick(rightChannelData[i]);
+		peakSum = (peakOutL + peakOutR) * 0.5f;
+	
         
         // Convert to db
         peakSumDb = dB(peakSum);
@@ -326,7 +340,15 @@ void PluginAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& 
         rightChannelData[i] *= gain;
         
 //        rightChannelData[i] = gain;           // Debug: Gain Dynamics
-    }
+     //ENDS FOR LOOP
+
+	  // distortion mode
+
+		for (int i = 0; i < buffer.getNumSamples(); ++i) {
+			leftChannelData[i] = processor->processSample(leftChannelData[i]);
+			rightChannelData[i] = processor->processSample(rightChannelData[i]);
+		}
+	}//ENDS FOR LOOP
 }
 
 //==============================================================================

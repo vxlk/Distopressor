@@ -69,6 +69,30 @@ private:
 
     float normalizedValue;
 
+
+
+    //==============================================================================
+   /* ScopedPointer<Slider> thresholdSlider;
+    ScopedPointer<Slider> ratioSlider;
+    ScopedPointer<Label> ratioLabel;
+    ScopedPointer<Label> thresholdLabel;
+    ScopedPointer<Slider> attackSlider;
+    ScopedPointer<Label> attackLabel;
+    ScopedPointer<Slider> releaseSlider;
+    ScopedPointer<Label> releaseLabel;
+    ScopedPointer<Slider> slider;
+    ScopedPointer<TextEditor> textEditor;
+    ScopedPointer<Slider> distSlider;
+    ScopedPointer<Slider> driveSlider;
+    ScopedPointer<Slider> modeButton;
+	ScopedPointer<Slider> mixSlider;
+    ScopedPointer<Label> modeLabel;
+    ScopedPointer<Label> distLabel;
+    ScopedPointer<Label> driveLabel;
+    ScopedPointer<Label> mixLabel;
+	*/
+
+
     //[/UserVariables]
 
     //==============================================================================
@@ -80,8 +104,14 @@ private:
     ScopedPointer<Label> attackLabel;
     ScopedPointer<Slider> releaseSlider;
     ScopedPointer<Label> releaseLabel;
-    ScopedPointer<Slider> slider;
-    ScopedPointer<TextEditor> textEditor;
+    ScopedPointer<Slider> mixSlider;
+    ScopedPointer<TextEditor> mixLabel;
+    ScopedPointer<Slider> distSlider;
+    ScopedPointer<Slider> driveSlider;
+    ScopedPointer<Slider> modeSlider;
+    ScopedPointer<TextEditor> distLabel;
+    ScopedPointer<TextEditor> driveLabel;
+    ScopedPointer<TextEditor> modeLabel;
 
 
     //==============================================================================

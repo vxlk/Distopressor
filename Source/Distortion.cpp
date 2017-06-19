@@ -1,6 +1,6 @@
 #include "Distortion.h"
 
-Distortion::Distortion() {
+Distortion::Distortion() : input(0.f), output(0.f) {
     controls.mode = 0;
     controls.drive = 1.f;
     controls.mix = 0.f;
