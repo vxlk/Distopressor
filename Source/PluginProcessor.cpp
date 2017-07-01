@@ -343,12 +343,14 @@ void PluginAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& 
      //ENDS FOR LOOP
 
 	  // distortion mode
-
+		
 		for (int i = 0; i < buffer.getNumSamples(); ++i) {
-			leftChannelData[i] = processor->processSample(leftChannelData[i]);
-			rightChannelData[i] = processor->processSample(rightChannelData[i]);
+			processor->controls.mode = getControlNumber();
+			leftChannelData[i] = processor->processSample(leftChannelData[i], processor->controls.mode);
+			rightChannelData[i] = processor->processSample(rightChannelData[i], processor->controls.mode);
 		}
 	}//ENDS FOR LOOP
+	std::cout << processor->controls.mode << std::endl;
 }
 
 //==============================================================================

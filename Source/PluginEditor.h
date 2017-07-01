@@ -23,6 +23,7 @@
 //[Headers]     -- You can add your own extra header files here --
 #include "JuceHeader.h"
 #include "PluginProcessor.h"
+#include "Distortion.h"
 //[/Headers]
 
 
@@ -47,6 +48,8 @@ public:
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
     void timerCallback();
+	int getControlNumber() { return roundedValue; }
+
     //[/UserMethods]
 
     void paint (Graphics& g) override;
@@ -57,6 +60,7 @@ public:
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
+
 
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
@@ -72,27 +76,7 @@ private:
 
 
     //==============================================================================
-   /* ScopedPointer<Slider> thresholdSlider;
-    ScopedPointer<Slider> ratioSlider;
-    ScopedPointer<Label> ratioLabel;
-    ScopedPointer<Label> thresholdLabel;
-    ScopedPointer<Slider> attackSlider;
-    ScopedPointer<Label> attackLabel;
-    ScopedPointer<Slider> releaseSlider;
-    ScopedPointer<Label> releaseLabel;
-    ScopedPointer<Slider> slider;
-    ScopedPointer<TextEditor> textEditor;
-    ScopedPointer<Slider> distSlider;
-    ScopedPointer<Slider> driveSlider;
-    ScopedPointer<Slider> modeButton;
-	ScopedPointer<Slider> mixSlider;
-    ScopedPointer<Label> modeLabel;
-    ScopedPointer<Label> distLabel;
-    ScopedPointer<Label> driveLabel;
-    ScopedPointer<Label> mixLabel;
-	*/
-
-
+	int roundedValue;
     //[/UserVariables]
 
     //==============================================================================

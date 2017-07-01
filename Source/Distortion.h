@@ -22,7 +22,7 @@ public:
     
 	Distortion();
     ~Distortion();
-    float processSample(float sample);
+    float processSample(float, int);
     
 private:
     // Intermediate values

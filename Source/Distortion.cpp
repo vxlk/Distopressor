@@ -8,12 +8,12 @@ Distortion::Distortion() : input(0.f), output(0.f) {
 
 Distortion::~Distortion() {}
 
-float Distortion::processSample(float sample)
+float Distortion::processSample(float sample, int type)
 {
     input = sample;
     output = input * controls.drive;
     
-    switch (controls.mode) {
+    switch (type) {
         case 1:
             output = softClip(output);
             break;
@@ -53,7 +53,7 @@ float Distortion::processSample(float sample)
 float Distortion::softClip(float sample)
 {
     if (sample < -1.f) {
-        return -softClipThreshold;
+        return -softClipThreshold; //2/3
     }
     else if (sample > 1.f) {
         return softClipThreshold;

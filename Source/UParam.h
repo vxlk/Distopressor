@@ -57,6 +57,13 @@ public:
         return vstVal;
     }
     
+	// set an integer
+	int setWithUparamInt(int val) {
+		uParamVal = val;
+		calcVst();
+		return vstVal;
+	}
+
     // get the current vst value
     float getVstVal(){return vstVal;}
     

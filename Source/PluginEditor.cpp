@@ -18,6 +18,7 @@
 */
 
 //[Headers] You can add your own extra header files here...
+
 //[/Headers]
 
 #include "PluginEditor.h"
@@ -200,7 +201,7 @@ PluginAudioProcessorEditor::PluginAudioProcessorEditor (PluginAudioProcessor& p)
     driveSlider->addListener (this);
 
     addAndMakeVisible (modeSlider = new Slider ("modeSlider"));
-    modeSlider->setRange (0, 10, 0);
+    modeSlider->setRange (0, 12, 1);
     modeSlider->setSliderStyle (Slider::LinearHorizontal);
     modeSlider->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
     modeSlider->addListener (this);
@@ -230,7 +231,7 @@ PluginAudioProcessorEditor::PluginAudioProcessorEditor (PluginAudioProcessor& p)
     modeLabel->setScrollbarsShown (true);
     modeLabel->setCaretVisible (true);
     modeLabel->setPopupMenuEnabled (true);
-    modeLabel->setText (TRANS("Drive\n"));
+    modeLabel->setText (TRANS("Mode"));
 
 
     //[UserPreSize]
@@ -243,6 +244,7 @@ PluginAudioProcessorEditor::PluginAudioProcessorEditor (PluginAudioProcessor& p)
 	distSlider		->setDoubleClickReturnValue(true, processor.DEFAULT_DISTTHRESHOLD);
 	driveSlider		->setDoubleClickReturnValue(true, processor.DEFAULT_DRIVE);
 	mixSlider		->setDoubleClickReturnValue(true, processor.DEFAULT_MIX);
+	//modeSlider		->setDoubleClickReturnValue(true, processor.DEFAULT_MODE);
 
     thresholdSlider ->setTextValueSuffix("dB");
     ratioSlider     ->setTextValueSuffix(":1");
@@ -255,7 +257,7 @@ PluginAudioProcessorEditor::PluginAudioProcessorEditor (PluginAudioProcessor& p)
 
     //[/UserPreSize]
 
-    setSize (300, 400);
+    setSize (300, 500);
 
 
     //[Constructor] You can add your own custom stuff here..
@@ -266,23 +268,6 @@ PluginAudioProcessorEditor::PluginAudioProcessorEditor (PluginAudioProcessor& p)
 PluginAudioProcessorEditor::~PluginAudioProcessorEditor()
 {
     //[Destructor_pre]. You can add your own custom destruction code here..
-
-   thresholdSlider = nullptr;
-    ratioSlider = nullptr;
-    ratioLabel = nullptr;
-    thresholdLabel = nullptr;
-    attackSlider = nullptr;
-    attackLabel = nullptr;
-    releaseSlider = nullptr;
-    releaseLabel = nullptr;
-    //slider = nullptr;
-    //textEditor = nullptr;
-	modeSlider = nullptr;
-	distSlider = nullptr;
-	driveSlider = nullptr;
-	modeLabel = nullptr;
-	distLabel = nullptr;
-	driveLabel = nullptr;
 
     //[/Destructor_pre]
 
@@ -324,26 +309,6 @@ void PluginAudioProcessorEditor::paint (Graphics& g)
 void PluginAudioProcessorEditor::resized()
 {
     //[UserPreResize] Add your own custom resize code here..
-
-
-   /* thresholdSlider->setBounds (8, 40, 80, 88);
-    ratioSlider->setBounds (8, 168, 80, 88);
-    ratioLabel->setBounds (8, 136, 80, 24);
-    thresholdLabel->setBounds (8, 8, 80, 24);
-    attackSlider->setBounds (104, 40, 80, 88);
-    attackLabel->setBounds (104, 8, 80, 24);
-    releaseSlider->setBounds (104, 168, 80, 88);
-    releaseLabel->setBounds (104, 136, 80, 24);
-    slider->setBounds (16, 288, 150, 24);
-    textEditor->setBounds (176, 288, 150, 24);
-    mixSlider->setBounds (176, 288, 150, 24);
-    driveSlider->setBounds (176, 288, 150, 24);
-    modeButton->setBounds (176, 288, 150, 24);
-    distSlider->setBounds (176, 288, 150, 24);
-    distLabel->setBounds (60, 288, 150, 24);
-    mixLabel->setBounds (80, 288, 150, 24);
-    modeLabel->setBounds (65, 288, 150, 24);
-    driveLabel->setBounds (76, 288, 150, 24); */
 
     //[/UserPreResize]
 
@@ -405,49 +370,35 @@ void PluginAudioProcessorEditor::sliderValueChanged (Slider* sliderThatWasMoved)
     else if (sliderThatWasMoved == mixSlider)
     {
         //[UserSliderCode_mixSlider] -- add your slider handling code here..
-        normalizedValue = processor.userParams[processor.release].setWithUparam(sliderThatWasMoved->getValue() / 1000.f);
-        processor.setParameterNotifyingHost(processor.release, normalizedValue);
+        normalizedValue = processor.userParams[processor.mix].setWithUparam(sliderThatWasMoved->getValue() / 1000.f);
+        processor.setParameterNotifyingHost(processor.mix, normalizedValue);
         //[/UserSliderCode_mixSlider]
     }
     else if (sliderThatWasMoved == distSlider)
     {
         //[UserSliderCode_distSlider] -- add your slider handling code here..
+		normalizedValue = processor.userParams[processor.distthreshold].setWithUparam(sliderThatWasMoved->getValue() / 1000.f);
+		processor.setParameterNotifyingHost(processor.distthreshold, normalizedValue);
         //[/UserSliderCode_distSlider]
     }
     else if (sliderThatWasMoved == driveSlider)
     {
         //[UserSliderCode_driveSlider] -- add your slider handling code here..
+		normalizedValue = processor.userParams[processor.drive].setWithUparam(sliderThatWasMoved->getValue() / 1000.f);
+		processor.setParameterNotifyingHost(processor.drive, normalizedValue);
         //[/UserSliderCode_driveSlider]
     }
     else if (sliderThatWasMoved == modeSlider)
     {
         //[UserSliderCode_modeSlider] -- add your slider handling code here..
+		/*roundedValue = processor.userParams[processor.mode].setWithUparamInt(sliderThatWasMoved->getValue());
+		processor.setParameterNotifyingHost(processor.mode, roundedValue); //rounded value is an integer*/
+		normalizedValue = processor.userParams[processor.mode].setWithUparam(sliderThatWasMoved->getValue());
+		processor.setParameterNotifyingHost(processor.mode, normalizedValue);
         //[/UserSliderCode_modeSlider]
     }
 
     //[UsersliderValueChanged_Post]
-    else if (sliderThatWasMoved == driveSlider)
-    {
-        //[UserSliderCode_ratioSlider] -- add your slider handling code here..
-        normalizedValue = processor.userParams[processor.ratio].setWithUparam(sliderThatWasMoved->getValue());
-        processor.setParameterNotifyingHost(processor.ratio, normalizedValue);
-        //[/UserSliderCode_ratioSlider]
-    }
-	else if (sliderThatWasMoved == distSlider)
-	{
-		//[UserSliderCode_attackSlider] -- add your slider handling code here..
-		// Must convert to seconds before sending to processor
-		normalizedValue = processor.userParams[processor.attack].setWithUparam(sliderThatWasMoved->getValue() / 1000.f);
-		processor.setParameterNotifyingHost(processor.attack, normalizedValue);
-		//[/UserSliderCode_attackSlider]
-	}
-	else if (sliderThatWasMoved == mixSlider)
-	{
-		//[UserSliderCode_attackSlider] -- add your slider handling code here..
-		// Must convert to seconds before sending to processor
-		normalizedValue = processor.userParams[processor.attack].setWithUparam(sliderThatWasMoved->getValue() / 1000.f);
-		processor.setParameterNotifyingHost(processor.attack, normalizedValue);
-	}
 		//[/UserSliderCode_attackSlider]
     //[/UsersliderValueChanged_Post]
 }
@@ -466,6 +417,7 @@ void PluginAudioProcessorEditor::timerCallback() {
     releaseSlider   ->setValue(processor.userParams[processor.release].getUparamVal() * 1000.f, dontSendNotification);
 	distSlider		->setValue(processor.userParams[processor.distthreshold].getUparamVal() * 1000.f, dontSendNotification);
 	driveSlider		->setValue(processor.userParams[processor.drive].getUparamVal() * 1000.f, dontSendNotification);
+	modeSlider		->setValue(processor.userParams[processor.mode].getUparamVal());
 }
 //[/MiscUserCode]
 
@@ -483,7 +435,7 @@ BEGIN_JUCER_METADATA
                  componentName="" parentClasses="public AudioProcessorEditor, public Timer"
                  constructorParams="PluginAudioProcessor&amp; p" variableInitialisers="AudioProcessorEditor (&amp;p), processor (p)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="0" initialWidth="300" initialHeight="400">
+                 fixedSize="0" initialWidth="300" initialHeight="500">
   <BACKGROUND backgroundColour="ff010000"/>
   <SLIDER name="Threshold Slider" id="1e116366caad33a9" memberName="thresholdSlider"
           virtualName="" explicitFocusOrder="0" pos="8 40 80 88" bkgcol="ffffffff"
@@ -551,7 +503,7 @@ BEGIN_JUCER_METADATA
           needsCallback="1"/>
   <SLIDER name="modeSlider" id="3a4b65fabf8a1e02" memberName="modeSlider"
           virtualName="" explicitFocusOrder="0" pos="16 408 150 24" min="0"
-          max="10" int="0" style="LinearHorizontal" textBoxPos="TextBoxLeft"
+          max="12" int="1" style="LinearHorizontal" textBoxPos="TextBoxLeft"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"
           needsCallback="1"/>
   <TEXTEDITOR name="distLabel" id="108905b02273d32a" memberName="distLabel"
@@ -563,7 +515,7 @@ BEGIN_JUCER_METADATA
               multiline="0" retKeyStartsLine="0" readonly="0" scrollbars="1"
               caret="1" popupmenu="1"/>
   <TEXTEDITOR name="modeLabel" id="3c9bd99d1b3917a9" memberName="modeLabel"
-              virtualName="" explicitFocusOrder="0" pos="176 408 150 24" initialText="Drive&#10;"
+              virtualName="" explicitFocusOrder="0" pos="176 408 150 24" initialText="Mode"
               multiline="0" retKeyStartsLine="0" readonly="0" scrollbars="1"
               caret="1" popupmenu="1"/>
 </JUCER_COMPONENT>

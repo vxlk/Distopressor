@@ -90,7 +90,7 @@ public:
     const float DEFAULT_RATIO       = 1.f;
     const float DEFAULT_ATTACK      = 0.020f;    // seconds
     const float DEFAULT_RELEASE     = 0.500f;   // seconds
-	const int   DEFAULT_MODE		= 1;		// Distortion mode, 0 = bypass, 1 = soft-clip, 2 = hard-clip
+	const int   DEFAULT_MODE		= 0;		// Distortion mode, 0 = bypass, 1 = soft-clip, 2 = hard-clip
 	const float DEFAULT_DRIVE		= 0.f;
 	const float DEFAULT_DISTTHRESHOLD	= 0.f;
 	const float DEFAULT_MIX			= 0.f;
@@ -100,7 +100,7 @@ private:
     const float DEFAULT_VST_RATIO       = 0.0f;
     const float DEFAULT_VST_ATTACK      = 0.2f;
     const float DEFAULT_VST_RELEASE     = 0.5f;
-	const int   DEFAULT_VST_MODE		= 1;	// Distortion mode, 0 = bypass, 1 = soft-clip, 2 = hard-clip
+	const int   DEFAULT_VST_MODE		= 0;	// Distortion mode, 0 = bypass, 1 = soft-clip, 2 = hard-clip
 	const float DEFAULT_VST_DRIVE		= 0.f;
 	const float DEFAULT_VST_DISTTHRESHOLD	= 0.f;
 	const float DEFAULT_VST_MIX			= 0.f;
